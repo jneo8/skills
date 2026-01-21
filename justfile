@@ -5,15 +5,23 @@ default:
 # Create symlinks to ~/.claude/skills
 link-claude:
     mkdir -p ~/.claude/skills
-    ln -sf {{justfile_directory()}}/clean-architecture ~/.claude/skills/clean-architecture
-    ln -sf {{justfile_directory()}}/skill-builder ~/.claude/skills/skill-builder
+    @for skill in {{justfile_directory()}}/*/SKILL.md; do \
+        skill_dir=$(dirname "$skill"); \
+        skill_name=$(basename "$skill_dir"); \
+        ln -sfn "$skill_dir" ~/.claude/skills/"$skill_name"; \
+        echo "Linked $skill_name"; \
+    done
     @echo "Linked all skills to ~/.claude/skills/"
 
 # Create symlinks to ~/.gemini/skills
 link-gemini:
     mkdir -p ~/.gemini/skills
-    ln -sf {{justfile_directory()}}/clean-architecture ~/.gemini/skills/clean-architecture
-    ln -sf {{justfile_directory()}}/skill-builder ~/.gemini/skills/skill-builder
+    @for skill in {{justfile_directory()}}/*/SKILL.md; do \
+        skill_dir=$(dirname "$skill"); \
+        skill_name=$(basename "$skill_dir"); \
+        ln -sfn "$skill_dir" ~/.gemini/skills/"$skill_name"; \
+        echo "Linked $skill_name"; \
+    done
     @echo "Linked all skills to ~/.gemini/skills/"
 
 # Create symlinks to both Claude and Gemini
@@ -29,9 +37,11 @@ validate skill:
 
 # Validate all skills
 validate-all:
-    @for skill in clean-architecture skill-builder; do \
-        echo "Validating $skill..."; \
-        agentskills validate {{justfile_directory()}}/$skill; \
+    @for skill in {{justfile_directory()}}/*/SKILL.md; do \
+        skill_dir=$(dirname "$skill"); \
+        skill_name=$(basename "$skill_dir"); \
+        echo "Validating $skill_name..."; \
+        agentskills validate "$skill_dir"; \
     done
 
 # Read skill properties as JSON (usage: just read-properties clean-architecture)
