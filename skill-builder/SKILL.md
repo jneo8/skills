@@ -91,19 +91,19 @@ Claude loads only what's needed for the current task.
 
 ### skills-ref
 
-A CLI tool for validating and managing skills. Install via pip:
+A CLI tool for validating and managing skills. Install via pipx:
 
 ```bash
-pip install skills-ref
+pipx install skills-ref
 ```
 
-**Commands:**
+**Commands** (CLI is `agentskills`):
 
 | Command | Description |
 |---------|-------------|
-| `skills-ref validate <path>` | Validate skill structure |
-| `skills-ref read-properties <path>` | Extract metadata as JSON |
-| `skills-ref to-prompt <path>` | Generate XML for agent prompts |
+| `agentskills validate <path>` | Validate skill structure |
+| `agentskills read-properties <path>` | Extract metadata as JSON |
+| `agentskills to-prompt <path>` | Generate XML for agent prompts |
 
 See: https://github.com/agentskills/agentskills/tree/main/skills-ref
 
